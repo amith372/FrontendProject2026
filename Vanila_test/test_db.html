@@ -10,55 +10,55 @@
 
 </head>
 
-<body>
+  <body>
 
-<script src="db.js"></script>
+    <script src="vanila_db.js"></script>
 
-<script>
+    <script>
 
-  function test() {
+      function test() {
 
-    try{
+        try{
 
-      const ob = db.openCostsDB("costsdb",1);
+          const ob = db.openCostsDB("costsdb",1);
 
-      const result1 = ob.addCost({sum:200, currency:”USD”, category:"FOOD", description:"pizza"});
+          const result1 = ob.addCost({sum:200, currency:"USD", category:"FOOD", description:"pizza"});
 
-      const result2 = ob.addCost({sum:400, currency:“USD”, category:"CAR", description:"fuel"});
+          const result2 = ob.addCost({sum:400, currency:"USD", category:"CAR", description:"fuel"});
 
-      if(ob) {
+          if(ob) {
 
-        console.log("creating db succeeded");
+            console.log("creating db succeeded");
+
+          }
+
+          if(result1) {
+
+            console.log("adding 1st cost item succeeded");
+
+          }
+
+          if(result2) {
+
+            console.log("adding 2nd cost item succeeded");
+
+          }
+
+          const data = db.getReport("USD");
+          console.log(data.total.sum);
+
+        } catch(exception) {
+
+          console.log(exception.message);
+
+        }
 
       }
 
-      if(result1) {
+      test()
 
-        console.log("adding 1st cost item succeeded");
+    </script>
 
-      }
-
-      if(result2) {
-
-        console.log("adding 2nd cost item succeeded");
-
-      }
-
-      const data = db.getReport(“USD”);
-      console.log(data.total.sum);
-
-    } catch(exception) {
-
-      console.log(exception.message);
-
-    }
-
-  }
-
-  test()
-
-</script>
-
-</body>
+  </body>
 
 </html>

@@ -1,25 +1,45 @@
-// Vanila_test/db.js - הגרסה להגשה (Vanilla JS)
+(function() {
+    const myDB = {
+        // 1. אנחנו שומרים את השערים הקבועים מראש כמאפיין של מסד הנתונים
+        rates: {"USD":1, "GBP":0.79, "EURO":0.93, "ILS":3.72},
 
-(function(global) {
-
-    const db = {
-
-        // 1. פתיחת מסד הנתונים
         openCostsDB: function(databaseName, databaseVersion) {
             this.dbName = databaseName;
-
             if (!localStorage.getItem(this.dbName)) {
                 localStorage.setItem(this.dbName, JSON.stringify([]));
             }
+
+            // 2. מפעילים פונקציה שמביאה נתונים ברקע (הקוד לא עוצר ומחכה לה!)
+            this.fetchRatesInBackground();
+
             return this;
         },
 
-        // 2. הוספת הוצאה חדשה
+        // 3. הפונקציה החדשה שעושה את ה-Fetch בלי לתקוע את התוכנית
+        fetchRatesInBackground: function() {
+            const baseUrl = 'https://api.exchangerate-api.com/v4';
+            const apiUrl = `${baseUrl}/latest/USD`;
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) throw new Error("HTTP error");
+                    return response.json();
+                })
+                .then(data => {
+
+                    this.rates = data.rates || data.conversion_rates || data;
+                    //console.log("Live exchange rates loaded in the background!");
+                })
+                .catch(error => {
+                    console.log("Could not get live rates, keeping fixed rates.");
+                });
+        },
+
         addCost: function(cost) {
             const dataString = localStorage.getItem(this.dbName) || '[]';
             const costs = JSON.parse(dataString);
-
             const today = new Date();
+
             const newCost = {
                 sum: cost.sum,
                 currency: cost.currency,
@@ -34,12 +54,11 @@
 
             costs.push(newCost);
             localStorage.setItem(this.dbName, JSON.stringify(costs));
-
             return newCost;
         },
 
-        // 3. הפקת דוח חודשי (כולל משיכת שערי חליפין)
-        getReport: async function(currency, year, month) {
+        // 4. הפונקציה הזו חזרה להיות סינכרונית רגילה!
+        getReport: function(currency, year, month) {
             const currentDate = new Date();
             const targetYear = year || currentDate.getFullYear();
             const targetMonth = month || (currentDate.getMonth() + 1);
@@ -51,26 +70,13 @@
                 item.date.year === targetYear && item.date.month === targetMonth
             );
 
-            const defaultRatesUrl = 'https://your-server.com/rates.json';
-            const exchangeRatesUrl = localStorage.getItem('exchangeRatesUrl') || defaultRatesUrl;
-
-            let rates = {};
-
-            try {
-                const response = await fetch(exchangeRatesUrl);
-                if (!response.ok) throw new Error("HTTP error " + response.status);
-                rates = await response.json();
-            } catch (error) {
-                console.error("Failed to fetch exchange rates:", error);
-                rates = {"USD":1, "GBP":0.6, "EURO":0.7, "ILS":3.4};
-            }
-
             let totalSum = 0;
 
+            // 5. היא פשוט משתמשת במחירון הנוכחי (בין אם הוא הקבוע או הלייב שעודכן ברקע)
             filteredCosts.forEach(item => {
-                if (rates[item.currency] && rates[currency]) {
-                    const sumInUsd = item.sum / rates[item.currency];
-                    totalSum += (sumInUsd * rates[currency]);
+                if (this.rates[item.currency] && this.rates[currency]) {
+                    const sumInUsd = item.sum / this.rates[item.currency];
+                    totalSum += (sumInUsd * this.rates[currency]);
                 }
             });
 
@@ -86,7 +92,6 @@
         }
     };
 
-    // חשיפת האובייקט לדפדפן כדי שקובץ ה-HTML של הטסטר יוכל לקרוא לו
-    global.db = db;
+    window['db'] = myDB;
 
-})(window);
+})();
