@@ -1,0 +1,20 @@
+/* src/components/getReport.css */
+
+/* Container for the controls (dropdowns and button) */
+.report-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+    align-items: center;
+}
+
+/* Ensure the select dropdowns maintain a good width */
+.control-field {
+    min-width: 120px;
+}
+
+/* Optional: Add a subtle hover effect to table rows for better UX */
+.MuiTableRow-root:hover {
+    background-color: #fcfcfc;
+}

@@ -1,121 +1,50 @@
-import { useState, useEffect } from 'react';
-import {
-    Container, Typography, Box, TextField,
-    Button, MenuItem, Select, InputLabel,
-    FormControl, Paper
-} from '@mui/material';
-import { db } from './db'; // הייבוא של מנוע הנתונים שלנו משלב 1!
+import { useEffect } from 'react';
+import { Container, Grid, Typography, Paper } from '@mui/material';
+import { db } from './db';
+import AddCost from './components/addCost';
+import GetReport from './components/GetReport';
+import './App.css';
 
+/**
+ * App Component.
+ * Acts as the main entry point and layout container for the Dashboard.
+ * @returns {JSX.Element} The rendered dashboard.
+ */
 function App() {
-    // 1. ניהול מצב (State): שומרים את מה שהמשתמש מקליד בכל שדה בטופס
-    const [sum, setSum] = useState('');
-    const [category, setCategory] = useState('');
-    const [description, setDescription] = useState('');
-    const [currency, setCurrency] = useState('USD'); // מטבע ברירת מחדל
 
-    // סטייט להצגת הודעת הצלחה למשתמש
-    const [message, setMessage] = useState('');
-
-    // 2. אתחול מסד הנתונים: פועל פעם אחת כשהאפליקציה עולה
     useEffect(() => {
         db.openCostsDB('costsdb', 1);
     }, []);
 
-    // 3. פונקציית הגישור: לוקחת את הנתונים מהטופס ושולחת ל-db.js
-    const handleAddCost = (e) => {
-        e.preventDefault(); // מונע מהדף לבצע רענון (Refresh) אוטומטי בעת שליחת טופס
-
-        // בונים אובייקט הוצאה בדיוק כמו ש-db.js מצפה לקבל
-        const newCost = {
-            sum: Number(sum), // חובה להמיר למספר, כי שדות טקסט מחזירים מחרוזת (String)
-            currency: currency,
-            category: category,
-            description: description
-        };
-
-        // קוראים לפונקציה מהקובץ db.js ששומרת בפועל את הנתונים!
-        db.addCost(newCost);
-
-        // מציגים הודעת הצלחה ומנקים את השדות (איפוס הטופס)
-        setMessage('ההוצאה נוספה ונשמרה בהצלחה!');
-        setSum('');
-        setCategory('');
-        setDescription('');
-
-        // מעלימים את הודעת ההצלחה אחרי 3 שניות
-        setTimeout(() => setMessage(''), 3000);
-    };
-
     return (
-        <Container maxWidth="sm">
-            {/* Paper זה רכיב של MUI שיוצר כרטיסייה לבנה עם קצת צל (elevation) */}
-            <Paper elevation={3} sx={{ p: 4, mt: 5 }}>
-                <Typography variant="h4" align="center" gutterBottom color="primary">
-                    Cost Manager
-                </Typography>
-                <Typography variant="subtitle1" align="center" sx={{ mb: 3 }}>
-                    הוספת הוצאה חדשה
-                </Typography>
+        <Container maxWidth="xl" sx={{ py: 4 }}>
 
-                {/* הטופס שלנו שקורא לפונקציה בעת לחיצה על סאבמיט */}
-                <form onSubmit={handleAddCost}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            <Typography variant="h3" align="center" color="primary" sx={{ mb: 5, fontWeight: 'bold' }}>
+                Cost Manager Dashboard
+            </Typography>
 
-                        {/* שדה סכום */}
-                        <TextField
-                            label="סכום"
-                            type="number"
-                            required
-                            value={sum}
-                            onChange={(e) => setSum(e.target.value)} // מעדכן את הסטייט בכל הקלדה
-                        />
+            <Grid container spacing={4} direction="column" sx={{ width: '100%', margin: 0 }}>
 
-                        {/* שדה תיאור */}
-                        <TextField
-                            label="תיאור (לדוגמה: פיצה)"
-                            required
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
+                <Grid item xs={15} sx={{ width: '95%' }}>
+                    <Paper elevation={3} sx={{ p: { xs: 2, md: 4 }, width: '100%', borderRadius: 3 }}>
+                        <Typography variant="h6" gutterBottom color="primary" sx={{ mb: 3 }}>
+                            Add New Expense
+                        </Typography>
+                        <AddCost />
+                    </Paper>
+                </Grid>
 
-                        {/* שדה קטגוריה */}
-                        <TextField
-                            label="קטגוריה (לדוגמה: FOOD)"
-                            required
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
-                        />
+                <Grid item xs={12} sx={{ width: '95%' }}>
 
-                        {/* בחירת מטבע (Select Dropdown) */}
-                        <FormControl required>
-                            <InputLabel>מטבע</InputLabel>
-                            <Select
-                                value={currency}
-                                label="מטבע"
-                                onChange={(e) => setCurrency(e.target.value)}
-                            >
-                                <MenuItem value="USD">USD ($)</MenuItem>
-                                <MenuItem value="ILS">ILS (₪)</MenuItem>
-                                <MenuItem value="EURO">EURO (€)</MenuItem>
-                                <MenuItem value="GBP">GBP (£)</MenuItem>
-                            </Select>
-                        </FormControl>
+                    <Paper elevation={3} sx={{ p: { xs: 2, md: 4 }, width: '100%', borderRadius: 3, overflow: 'hidden' }}>
+                        <Typography variant="h4" gutterBottom color="primary" align="center" sx={{ mb: 4 }}>
+                            Monthly Report & Yearly Trend
+                        </Typography>
+                        <GetReport />
+                    </Paper>
+                </Grid>
 
-                        {/* כפתור הוספה */}
-                        <Button type="submit" variant="contained" size="large" color="primary">
-                            שמור הוצאה
-                        </Button>
-
-                        {/* הודעת הצלחה (מופיעה רק אם יש טקסט ב-message) */}
-                        {message && (
-                            <Typography color="success.main" align="center" fontWeight="bold">
-                                {message}
-                            </Typography>
-                        )}
-
-                    </Box>
-                </form>
-            </Paper>
+            </Grid>
         </Container>
     );
 }
