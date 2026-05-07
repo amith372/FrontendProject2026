@@ -25,7 +25,7 @@ function App() {
 
             <Grid container spacing={4} direction="column" sx={{ width: '100%', margin: 0 }}>
 
-                <Grid item xs={15} sx={{ width: '95%' }}>
+                <Grid xs={12} sx={{ width: '95%' }}>
                     <Paper elevation={3} sx={{ p: { xs: 2, md: 4 }, width: '100%', borderRadius: 3 }}>
                         <Typography variant="h6" gutterBottom color="primary" sx={{ mb: 3 }}>
                             Add New Expense
@@ -34,7 +34,7 @@ function App() {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={12} sx={{ width: '95%' }}>
+                <Grid xs={12} sx={{ width: '95%' }}>
 
                     <Paper elevation={3} sx={{ p: { xs: 2, md: 4 }, width: '100%', borderRadius: 3, overflow: 'hidden' }}>
                         <Typography variant="h4" gutterBottom color="primary" align="center" sx={{ mb: 4 }}>
