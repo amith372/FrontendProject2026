@@ -31,7 +31,7 @@
                     //console.log("Live exchange rates loaded in the background!");
                 })
                 .catch(error => {
-                    console.log("Could not get live rates, keeping fixed rates.");
+                    console.log("Could not get live rates, keeping fixed rates.", error);
                 });
         },
 
