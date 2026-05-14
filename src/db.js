@@ -85,8 +85,10 @@ export const db = {
         // Note: You might need to replace this baseUrl with the exact one from your API provider
         const baseUrl = 'https://api.exchangerate-api.com/v4';
 
+        const savedUrl = localStorage.getItem('exchangeRatesUrl');
+
         // Construct the full URL requesting latest rates based on USD
-        const apiUrl = `${baseUrl}/latest/USD`;
+        const apiUrl = savedUrl || `${baseUrl}/latest/USD`;
 
         let rates = {};
 
@@ -104,6 +106,10 @@ export const db = {
 
             // Extract the rates object (APIs usually wrap it in 'rates' or 'conversion_rates')
             rates = responseData.rates || responseData.conversion_rates || responseData;
+
+            if (rates["EUR"]) {
+                rates["EURO"] = rates["EUR"];
+            }
 
         } catch (error) {
             // Fallback to default manual rates in case of network failure or API limit reached

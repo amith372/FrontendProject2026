@@ -4,6 +4,7 @@ import { db } from './db';
 import AddCost from './components/addCost';
 import GetReport from './components/GetReport';
 import './App.css';
+import RateSettings from './components/RateSettings';
 
 /**
  * App Component.
@@ -32,6 +33,10 @@ function App() {
                         </Typography>
                         <AddCost />
                     </Paper>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <RateSettings />
                 </Grid>
 
                 <Grid xs={12} sx={{ width: '95%' }}>
