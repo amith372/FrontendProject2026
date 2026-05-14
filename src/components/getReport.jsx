@@ -1,5 +1,20 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Box, Button, MenuItem, Select, InputLabel, FormControl, Typography, Table, TableBody, TableCell, TableHead, TableRow, Divider } from '@mui/material';
+import {
+    Box,
+    Button,
+    MenuItem,
+    Select,
+    InputLabel,
+    FormControl,
+    Typography,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+    Divider,
+    TextField
+} from '@mui/material';
 import { db } from '../db';
 import PieReport from './pieReport';
 import BarReport from './barReport';
@@ -41,7 +56,7 @@ export default function GetReport() {
 
     useEffect(() => {
         handleGenerateReport();
-    }, [currency, month, year]);
+    }, [currency]);
 
     const pieData = useMemo(() => {
         if (!reportData) return [];
@@ -79,10 +94,14 @@ export default function GetReport() {
                 </FormControl>
 
                 <FormControl size="small" className="control-field">
-                    <InputLabel>Year</InputLabel>
-                    <Select value={year} label="Year" onChange={e => setYear(e.target.value)}>
-                        {[2024,2025,2026].map(y => <MenuItem key={y} value={y}>{y}</MenuItem>)}
-                    </Select>
+                    <TextField
+                        size="small"
+                        label="Year"
+                        type="number"
+                        className="control-field"
+                        value={year}
+                        onChange={(e) => setYear(Number(e.target.value))}
+                    />
                 </FormControl>
 
                 <FormControl size="small" className="control-field">

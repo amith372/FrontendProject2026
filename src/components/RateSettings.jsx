@@ -7,12 +7,11 @@ import { Box, TextField, Button, Typography, Paper } from '@mui/material';
  * Persists the URL to localStorage for the db engine to use.
  */
 function RateSettings() {
-    const [ratesUrl, setRatesUrl] = useState(localStorage.getItem('exchangeRatesUrl') || '');
+    const [ratesUrl, setRatesUrl] = useState('');
     const [status, setStatus] = useState('');
 
     const handleSaveUrl = () => {
         localStorage.setItem('exchangeRatesUrl', ratesUrl);
-        setStatus('URL saved successfully!');
 
         // Clear message after 3 seconds
         setTimeout(() => setStatus(''), 3000);

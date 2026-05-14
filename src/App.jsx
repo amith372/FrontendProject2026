@@ -43,7 +43,7 @@ function App() {
 
                     <Paper elevation={3} sx={{ p: { xs: 2, md: 4 }, width: '100%', borderRadius: 3, overflow: 'hidden' }}>
                         <Typography variant="h4" gutterBottom color="primary" align="center" sx={{ mb: 4 }}>
-                            Monthly Report & Yearly Trend
+                            📆Monthly Report & Yearly Trend
                         </Typography>
                         <GetReport />
                     </Paper>
