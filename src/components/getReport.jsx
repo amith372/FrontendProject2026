@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Box, Button, MenuItem, Select, InputLabel, FormControl, Typography, Table, TableBody, TableCell, TableHead, TableRow, Divider } from '@mui/material';
 import { db } from '../db';
 import PieReport from './pieReport';
@@ -17,6 +17,7 @@ export default function GetReport() {
 
     const [reportData, setReportData] = useState(null);
     const [yearlyData, setYearlyData] = useState([]);
+
 
     const handleGenerateReport = async () => {
         const data = await db.getReport(currency, year, month);
@@ -38,19 +39,34 @@ export default function GetReport() {
         setYearlyData(formattedYearlyData);
     };
 
+    useEffect(() => {
+        handleGenerateReport();
+    }, [currency, month, year]);
+
     const pieData = useMemo(() => {
         if (!reportData) return [];
+
         const catMap = {};
+        const rates = reportData.rates;
+        const targetCurrency = currency;
 
         reportData.costs.forEach(item => {
-            catMap[item.category] = (catMap[item.category] || 0) + item.sum;
+            let convertedSum = item.sum;
+
+
+            if (rates[item.currency] && rates[targetCurrency]) {
+                const sumInUsd = item.sum / rates[item.currency];
+                convertedSum = sumInUsd * rates[targetCurrency];
+            }
+
+            catMap[item.category] = (catMap[item.category] || 0) + convertedSum;
         });
 
         return Object.keys(catMap).map(k => ({
             name: k,
             value: Number(catMap[k].toFixed(2))
         }));
-    }, [reportData]);
+    }, [reportData,currency]);
 
     return (
         <Box>

@@ -136,7 +136,8 @@ export const db = {
             total: {
                 currency: currency,
                 sum: Number(totalSum.toFixed(2)) // Round to 2 decimal places
-            }
+            },
+            rates: rates
         };
     }
 };
