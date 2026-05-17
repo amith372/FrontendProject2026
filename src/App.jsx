@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { Container, Grid, Typography, Paper } from '@mui/material';
 import { db } from './db';
-import AddCost from './components/addCost';
-import GetReport from './components/GetReport';
+import AddCost from './components/AddCost.jsx';
+import GetReport from './components/GetReport.jsx';
 import './App.css';
 import RateSettings from './components/RateSettings';
 

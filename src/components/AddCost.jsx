@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, TextField, Button, MenuItem, Select, InputLabel, FormControl, Typography, Grid } from '@mui/material';
 import { db } from '../db';
-import './addCost.css';
+import './AddCost.css';
 
 /**
  * AddCost Component - Handles user input for new expenses.

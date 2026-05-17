@@ -16,9 +16,9 @@ import {
     TextField
 } from '@mui/material';
 import { db } from '../db';
-import PieReport from './pieReport';
-import BarReport from './barReport';
-import './getReport.css';
+import PieReport from './PieReport.jsx';
+import BarReport from './BarReport.jsx';
+import './GetReport.css';
 
 /**
  * GetReport Component.

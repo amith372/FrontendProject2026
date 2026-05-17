@@ -7,7 +7,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
  */
 export default function BarReport({ data }) {
     return (
-        <div style={{ width: '100%', height: '350px' }}>
+        <div style={{ width: '100%', height: '500px' }}>
             <ResponsiveContainer width="99%" height="100%">
                 <BarChart
                     data={data}

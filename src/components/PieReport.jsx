@@ -12,7 +12,7 @@ const COLORS = ['#1976d2', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
 export default function PieReport({ data }) {
     return (
         // Added minWidth: 0 to prevent grid overflow, ensuring it stays responsive
-        <div style={{ width: '100%', height: 350, minWidth: 0 }}>
+        <div style={{ width: '100%', height: 500, minWidth: 0 }}>
             <ResponsiveContainer>
                 <PieChart>
 
