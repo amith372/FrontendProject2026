@@ -4,115 +4,126 @@ import { db } from '../db';
 import './AddCost.css';
 
 /**
- * AddCost Component - Handles user input for new expenses.
- * Fully translated to English with a clean horizontal layout.
- * @returns {JSX.Element} The rendered form.
+ * AddCost Component - Handles user input for adding new expense items.
+ * Provides a form with fields for amount, description, category, and currency selection.
+ * @returns {JSX.Element} The rendered expense form with validation and feedback.
  */
 export default function AddCost() {
-    const [sum, setSum] = useState('');
-    const [category, setCategory] = useState('');
-    const [description, setDescription] = useState('');
-    const [currency, setCurrency] = useState('USD');
-    const [message, setMessage] = useState('');
+  const [sum, setSum] = useState('');
+  const [category, setCategory] = useState('');
+  const [description, setDescription] = useState('');
+  const [currency, setCurrency] = useState('USD');
+  const [message, setMessage] = useState('');
 
-    /**
-     * Handles form submission and database persistence.
-     * @param {Event} e - The form event.
-     */
-    const handleAddCost = (e) => {
-        e.preventDefault();
+  /**
+   * Handles form submission by validating input and persisting to the database.
+   * Displays success message and resets form fields on completion.
+   * @param {React.FormEvent} event - The form submission event.
+   */
+  const handleAddCost = (event) => {
+    event.preventDefault();
 
-        const newCost = {
-            sum: Number(sum),
-            currency: currency,
-            category: category,
-            description: description
-        };
-
-        db.addCost(newCost);
-
-        setMessage('Expense added successfully!');
-        setSum('');
-        setCategory('');
-        setDescription('');
-
-        // Clear the success message after 3 seconds
-        setTimeout(() => setMessage(''), 3000);
+    // Construct the cost object with explicit type conversions.
+    const newCost = {
+      sum: Number(sum),
+      currency,
+      category,
+      description,
     };
 
-    return (
-        <form onSubmit={handleAddCost}>
+    // Persist the new cost to the database.
+    db.addCost(newCost);
 
-            <Grid container spacing={3} sx={{ alignItems: 'center' }}>
+    // Display success feedback to the user.
+    setMessage('Expense added successfully!');
 
-                {/* Changed labels to English and removed explicit asterisks */}
-                <Grid xs={12} sm={6} md={3}>
-                    <TextField
-                        label="Amount"
-                        type="number"
-                        required
-                        value={sum}
-                        onChange={(e) => setSum(e.target.value)}
-                        fullWidth
-                        size="small"
-                    />
-                </Grid>
+    // Reset all form fields to their initial state.
+    setSum('');
+    setCategory('');
+    setDescription('');
 
-                <Grid xs={12} sm={6} md={3}>
-                    <TextField
-                        label="Description"
-                        required
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        fullWidth
-                        size="small"
-                    />
-                </Grid>
+    // Clear the success message after 3 seconds to avoid clutter.
+    setTimeout(() => setMessage(''), 3000);
+  };
 
-                <Grid xs={12} sm={6} md={3}>
-                    <TextField
-                        label="Category"
-                        required
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                        fullWidth
-                        size="small"
-                    />
-                </Grid>
+  return (
+    <form onSubmit={handleAddCost}>
+      {/* Responsive grid container for form fields */}
+      <Grid container spacing={3} sx={{ alignItems: 'center' }}>
 
-                <Grid xs={12} sm={6} md={3}>
-                    <FormControl required fullWidth size="small">
-                        <InputLabel>Currency</InputLabel>
-                        <Select
-                            value={currency}
-                            label="Currency"
-                            onChange={(e) => setCurrency(e.target.value)}
-                        >
-                            <MenuItem value="USD">USD ($)</MenuItem>
-                            <MenuItem value="ILS">ILS (₪)</MenuItem>
-                            <MenuItem value="EURO">EURO (€)</MenuItem>
-                            <MenuItem value="GBP">GBP (£)</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Grid>
+        {/* Amount Input Field */}
+        <Grid xs={12} sm={6} md={3}>
+          <TextField
+            label="Amount"
+            type="number"
+            required
+            value={sum}
+            onChange={(event) => setSum(event.target.value)}
+            fullWidth
+            size="small"
+          />
+        </Grid>
 
-            </Grid>
+        {/* Description Input Field */}
+        <Grid xs={12} sm={6} md={3}>
+          <TextField
+            label="Description"
+            required
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+            fullWidth
+            size="small"
+          />
+        </Grid>
 
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
-                <Button
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    sx={{ minWidth: '200px' }}
-                >
-                    Save Expense
-                </Button>
+        {/* Category Input Field */}
+        <Grid xs={12} sm={6} md={3}>
+          <TextField
+            label="Category"
+            required
+            value={category}
+            onChange={(event) => setCategory(event.target.value)}
+            fullWidth
+            size="small"
+          />
+        </Grid>
 
-                <Typography color="success.main" sx={{ mt: 1, minHeight: '24px', fontWeight: 'bold' }}>
-                    {message}
-                </Typography>
-            </Box>
+        {/* Currency Selection Dropdown */}
+        <Grid xs={12} sm={6} md={3}>
+          <FormControl required fullWidth size="small">
+            <InputLabel>Currency</InputLabel>
+            <Select
+              value={currency}
+              label="Currency"
+              onChange={(event) => setCurrency(event.target.value)}
+            >
+              <MenuItem value="USD">USD ($)</MenuItem>
+              <MenuItem value="ILS">ILS (₪)</MenuItem>
+              <MenuItem value="EURO">EURO (€)</MenuItem>
+              <MenuItem value="GBP">GBP (£)</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
 
-        </form>
-    );
+      </Grid>
+
+      {/* Submit Button and Success Message Container */}
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
+        <Button
+          type="submit"
+          variant="contained"
+          size="large"
+          sx={{ minWidth: '200px' }}
+        >
+          Save Expense
+        </Button>
+
+        {/* Success message displayed after form submission */}
+        <Typography color="success.main" sx={{ mt: 1, minHeight: '24px', fontWeight: 'bold' }}>
+          {message}
+        </Typography>
+      </Box>
+
+    </form>
+  );
 }
