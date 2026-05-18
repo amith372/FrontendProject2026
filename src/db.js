@@ -81,14 +81,12 @@ export const db = {
             item.date.year === targetYear && item.date.month === targetMonth
         );
 
-        // Define the API URL using string interpolation (Template Literals)
-        // Note: You might need to replace this baseUrl with the exact one from your API provider
-        const baseUrl = 'https://api.exchangerate-api.com/v4';
-
         const savedUrl = localStorage.getItem('exchangeRatesUrl');
 
-        // Construct the full URL requesting latest rates based on USD
-        const apiUrl = savedUrl || `${baseUrl}/latest/USD`;
+        const defaultUrl = '/rates.json';
+
+        // Case the user entered url
+        const apiUrl = savedUrl || defaultUrl;
 
         let rates = {};
 

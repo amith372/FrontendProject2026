@@ -22,6 +22,10 @@ export default function AddCost() {
     const handleAddCost = (e) => {
         e.preventDefault();
 
+        if (Number(sum) < 0) {
+            return;
+        }
+
         const newCost = {
             sum: Number(sum),
             currency: currency,
@@ -53,6 +57,9 @@ export default function AddCost() {
                         required
                         value={sum}
                         onChange={(e) => setSum(e.target.value)}
+                        error={Number(sum) < 0}
+                        helperText={Number(sum) < 0 ? "Amount can only be positive number" : ""}
+                        inputProps={{ min: 0 }}
                         fullWidth
                         size="small"
                     />
