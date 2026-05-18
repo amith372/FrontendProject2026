@@ -3,7 +3,7 @@
 .form-container {
     display: flex;
     flex-direction: column;
-    gap: 24px; /* רווח בין השדות */
+    gap: 24px; /*gap between fields*/
 }
 
 .submit-button {
@@ -16,5 +16,5 @@
     text-align: center;
     font-weight: bold;
     margin-top: 16px;
-    min-height: 24px; /* שומר מקום להודעה כדי שהטופס לא יקפוץ */
+    min-height: 24px; /* insures that there is space so the form doesnt move */
 }

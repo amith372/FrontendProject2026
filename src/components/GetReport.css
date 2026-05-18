@@ -14,7 +14,7 @@
     min-width: 120px;
 }
 
-/* Optional: Add a subtle hover effect to table rows for better UX */
+/* Add a subtle hover effect to table rows for better UX */
 .MuiTableRow-root:hover {
     background-color: #fcfcfc;
 }
