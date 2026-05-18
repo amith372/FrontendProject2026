@@ -18,14 +18,11 @@
     <script>
       /**
        * Test function to validate the database operations.
-       * Creates a test database, adds sample expenses, and retrieves a report.
        */
       function testDatabase() {
         try {
-          // Initialize the database with a test name and version.
           const databaseObject = db.openCostsDB('costsdb', 1);
 
-          // Test 1: Add first cost item (pizza in USD).
           const result1 = databaseObject.addCost({
             sum: 200,
             currency: 'USD',
@@ -33,7 +30,6 @@
             description: 'pizza',
           });
 
-          // Test 2: Add second cost item (fuel in USD).
           const result2 = databaseObject.addCost({
             sum: 400,
             currency: 'USD',
@@ -41,26 +37,21 @@
             description: 'fuel',
           });
 
-          // Verify database initialization succeeded.
           if (databaseObject) {
             console.log('✓ Creating database succeeded');
           }
 
-          // Verify first cost item addition succeeded.
           if (result1) {
             console.log('✓ Adding 1st cost item succeeded');
           }
 
-          // Verify second cost item addition succeeded.
           if (result2) {
             console.log('✓ Adding 2nd cost item succeeded');
           }
 
-          // Generate a report for the current month in USD and log the total.
           const report = db.getReport('USD');
           console.log(`✓ Report total: ${report.total.sum}`);
         } catch (exception) {
-          // Log any errors encountered during testing.
           console.error('Test failed:', exception.message);
         }
       }

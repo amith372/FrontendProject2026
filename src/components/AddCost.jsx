@@ -5,8 +5,7 @@ import './AddCost.css';
 
 /**
  * AddCost Component - Handles user input for adding new expense items.
- * Provides a form with fields for amount, description, category, and currency selection.
- * @returns {JSX.Element} The rendered expense form with validation and feedback.
+ * @returns {JSX.Element} The rendered expense form.
  */
 export default function AddCost() {
   const [sum, setSum] = useState('');
@@ -16,14 +15,12 @@ export default function AddCost() {
   const [message, setMessage] = useState('');
 
   /**
-   * Handles form submission by validating input and persisting to the database.
-   * Displays success message and resets form fields on completion.
+   * Handles form submission and database persistence.
    * @param {React.FormEvent} event - The form submission event.
    */
   const handleAddCost = (event) => {
     event.preventDefault();
 
-    // Construct the cost object with explicit type conversions.
     const newCost = {
       sum: Number(sum),
       currency,
@@ -31,27 +28,19 @@ export default function AddCost() {
       description,
     };
 
-    // Persist the new cost to the database.
     db.addCost(newCost);
 
-    // Display success feedback to the user.
     setMessage('Expense added successfully!');
-
-    // Reset all form fields to their initial state.
     setSum('');
     setCategory('');
     setDescription('');
 
-    // Clear the success message after 3 seconds to avoid clutter.
     setTimeout(() => setMessage(''), 3000);
   };
 
   return (
     <form onSubmit={handleAddCost}>
-      {/* Responsive grid container for form fields */}
       <Grid container spacing={3} sx={{ alignItems: 'center' }}>
-
-        {/* Amount Input Field */}
         <Grid xs={12} sm={6} md={3}>
           <TextField
             label="Amount"
@@ -64,7 +53,6 @@ export default function AddCost() {
           />
         </Grid>
 
-        {/* Description Input Field */}
         <Grid xs={12} sm={6} md={3}>
           <TextField
             label="Description"
@@ -76,7 +64,6 @@ export default function AddCost() {
           />
         </Grid>
 
-        {/* Category Input Field */}
         <Grid xs={12} sm={6} md={3}>
           <TextField
             label="Category"
@@ -88,7 +75,6 @@ export default function AddCost() {
           />
         </Grid>
 
-        {/* Currency Selection Dropdown */}
         <Grid xs={12} sm={6} md={3}>
           <FormControl required fullWidth size="small">
             <InputLabel>Currency</InputLabel>
@@ -104,10 +90,8 @@ export default function AddCost() {
             </Select>
           </FormControl>
         </Grid>
-
       </Grid>
 
-      {/* Submit Button and Success Message Container */}
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
         <Button
           type="submit"
@@ -118,7 +102,6 @@ export default function AddCost() {
           Save Expense
         </Button>
 
-        {/* Success message displayed after form submission */}
         <Typography color="success.main" sx={{ mt: 1, minHeight: '24px', fontWeight: 'bold' }}>
           {message}
         </Typography>
