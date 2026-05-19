@@ -137,43 +137,43 @@ export default function GetReport() {
 
     return (
         <Box>
-            <Box className="report-controls">
-                <FormControl size="small" className="control-field">
+            <Box className='report-controls'>
+                <FormControl size='small' className='control-field'>
                     <InputLabel>Month</InputLabel>
-                    <Select value={month} label="Month" onChange={e => setMonth(e.target.value)}>
+                    <Select value={month} label='Month' onChange={e => setMonth(e.target.value)}>
                         {[1,2,3,4,5,6,7,8,9,10,11,12].map(m => <MenuItem key={m} value={m}>{m}</MenuItem>)}
                     </Select>
                 </FormControl>
 
-                <FormControl size="small" className="control-field">
+                <FormControl size='small' className='control-field'>
                     <TextField
-                        size="small"
-                        label="Year"
-                        type="number"
-                        className="control-field"
+                        size='small'
+                        label='Year'
+                        type='number'
+                        className='control-field'
                         value={year}
                         onChange={(e) => setYear(Number(e.target.value))}
                     />
                 </FormControl>
 
-                <FormControl size="small" className="control-field">
+                <FormControl size='small' className='control-field'>
                     <InputLabel>Currency</InputLabel>
-                    <Select value={currency} label="Currency" onChange={e => setCurrency(e.target.value)}>
-                        <MenuItem value="USD">USD</MenuItem>
-                        <MenuItem value="ILS">ILS</MenuItem>
-                        <MenuItem value="EURO">EURO</MenuItem>
-                        <MenuItem value="GBP">GBP</MenuItem>
+                    <Select value={currency} label='Currency' onChange={e => setCurrency(e.target.value)}>
+                        <MenuItem value='USD'>USD</MenuItem>
+                        <MenuItem value='ILS'>ILS</MenuItem>
+                        <MenuItem value='EURO'>EURO</MenuItem>
+                        <MenuItem value='GBP'>GBP</MenuItem>
                     </Select>
                 </FormControl>
 
-                <Button variant="contained" color="primary" onClick={handleGenerateReport}>
+                <Button variant='contained' color='primary' onClick={handleGenerateReport}>
                     Generate Report
                 </Button>
             </Box>
 
             {reportData && (
                 <Box>
-                    <Table size="small" sx={{ mb: 2 }}>
+                    <Table size='small' sx={{ mb: 2 }}>
                         <TableHead>
                             <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
                                 <TableCell><b>Date</b></TableCell>
@@ -193,7 +193,7 @@ export default function GetReport() {
                             ))}
 
                             <TableRow>
-                                <TableCell colSpan={3} align="right" sx={{ fontWeight: 'bold' }}>
+                                <TableCell colSpan={3} align='right' sx={{ fontWeight: 'bold' }}>
                                     Total in {reportData.total.currency}:
                                 </TableCell>
                                 <TableCell sx={{ fontWeight: 'bold', color: '#1976d2' }}>
@@ -217,7 +217,7 @@ export default function GetReport() {
 
                         {/* Left Chart (Pie) */}
                         <Box sx={{ width: '45%' }}>
-                            <Typography align="center" variant="subtitle1" color="textSecondary" gutterBottom sx={{ fontWeight: 'bold' }}>
+                            <Typography align='center' variant='subtitle1' color='textSecondary' gutterBottom sx={{ fontWeight: 'bold' }}>
                                 Category Distribution (Selected Month)
                             </Typography>
                             <PieReport data={pieData} />
@@ -225,7 +225,7 @@ export default function GetReport() {
 
                         {/* Right Chart (Bar) - marginLeft: 'auto' forces it to the right end */}
                         <Box sx={{ width: '45%', ml: 'auto' }}>
-                            <Typography align="center" variant="subtitle1" color="textSecondary" gutterBottom sx={{ fontWeight: 'bold' }}>
+                            <Typography align='center' variant='subtitle1' color='textSecondary' gutterBottom sx={{ fontWeight: 'bold' }}>
                                 Yearly Trend (Monthly Totals)
                             </Typography>
                             <BarReport data={yearlyData} />

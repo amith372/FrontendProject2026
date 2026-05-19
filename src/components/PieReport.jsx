@@ -17,14 +17,14 @@ export default function PieReport({ data }) {
                 <PieChart>
 
                     {/* 70% radius to make space */}
-                    <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius="70%" label>
+                    <Pie data={data} dataKey='value' nameKey='name' cx='50%' cy='50%' outerRadius='70%' label>
                         {data.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
                     </Pie>
 
                     <Tooltip />
-                    <Legend verticalAlign="bottom" height={36} />
+                    <Legend verticalAlign='bottom' height={36} />
 
                 </PieChart>
             </ResponsiveContainer>

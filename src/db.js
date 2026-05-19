@@ -96,7 +96,7 @@ export const db = {
 
             // Check if the response status is ok
             if (response.ok === false) {
-                throw new Error("HTTP error " + response.status);
+                throw new Error('HTTP error ' + response.status);
             }
 
             // Parse the JSON data from the API response
@@ -105,14 +105,14 @@ export const db = {
             // Extract the rates object
             rates = responseData.rates || responseData.conversion_rates || responseData;
 
-            if (rates["EUR"]) {
-                rates["EURO"] = rates["EUR"];
+            if (rates['EUR']) {
+                rates['EURO'] = rates['EUR'];
             }
 
         } catch (error) {
             // Fallback to default manual rates in case of network failure or API limit reached
-            console.error("Failed to fetch live exchange rates:", error);
-            rates = {"USD":1, "GBP":0.79, "EURO":0.93, "ILS":3.72};
+            console.error('Failed to fetch live exchange rates:', error);
+            rates = {'USD':1, 'GBP':0.79, 'EURO':0.93, 'ILS':3.72};
         }
 
         let totalSum = 0;

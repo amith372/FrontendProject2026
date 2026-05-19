@@ -7,15 +7,15 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 export default function BarReport({ data }) {
     return (
         <div style={{ width: '100%', height: '500px' }}>
-            <ResponsiveContainer width="99%" height="100%">
+            <ResponsiveContainer width='99%' height='100%'>
                 <BarChart
                     data={data}
                     margin={{ top: 30, right: 30, left: 0, bottom: 45 }}
                 >
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                    <CartesianGrid strokeDasharray='3 3' vertical={false} />
 
                     <XAxis
-                        dataKey="month"
+                        dataKey='month'
                         // interval={0} forces every label to be shown, ensuring equal spacing
                         interval={0}
                         // padding adds more space at the start and end of the axis
@@ -27,9 +27,9 @@ export default function BarReport({ data }) {
                     <Tooltip cursor={{ fill: '#f5f5f5' }} />
 
                     <Bar
-                        dataKey="amount"
-                        fill="#2ecc71"
-                        name="Amount"
+                        dataKey='amount'
+                        fill='#2ecc71'
+                        name='Amount'
                         // Fixed bar size helps maintain the look regardless of data availability
                         barSize={30}
                         radius={[4, 4, 0, 0]}

@@ -10,7 +10,7 @@
 
     const myDB = {
         // Default exchange rates is USD
-        rates: {"USD":1, "GBP":0.8, "EURO":0.9, "ILS":3.7},
+        rates: {'USD':1, 'GBP':0.8, 'EURO':0.9, 'ILS':3.7},
 
         openCostsDB: function(databaseName, databaseVersion) {
             this.dbName = databaseName;
@@ -43,15 +43,15 @@
 
             fetch(apiUrl)
                 .then(response => {
-                    if (!response.ok) throw new Error("HTTP error");
+                    if (!response.ok) throw new Error('HTTP error');
                     return response.json();
                 })
                 .then(data => {
                     // Adapt to different API response structures
                     this.rates = data.rates || data.conversion_rates || data;
                     //Make EUR and EURO consistent because some websites use one or the other
-                    if (this.rates["EUR"]) {
-                        this.rates["EURO"] = this.rates["EUR"];
+                    if (this.rates['EUR']) {
+                        this.rates['EURO'] = this.rates['EUR'];
                     }
                 })
                 .catch(error => {
@@ -63,7 +63,7 @@
          * Adds a new cost record to the database.
          * @param {Object} cost - The cost object to add.
          * @param {number} cost.sum - The amount of the expense.
-         * @param {string} cost.currency - The currency code (e.g., "USD", "ILS").
+         * @param {string} cost.currency - The currency code (e.g., 'USD', 'ILS').
          * @param {string} cost.category - The category of the expense.
          * @param {string} cost.description - A brief description of the expense.
          * @returns {Object} The newly created cost object including the injected date.
@@ -95,7 +95,7 @@
 
         /**
          * Generates a monthly expense report, converting all costs to a target currency.
-         * @param {string} currency - The target currency for the report total (e.g., "USD").
+         * @param {string} currency - The target currency for the report total (e.g., 'USD').
          * @param {number} [year] - The target year (defaults to current year).
          * @param {number} [month] - The target month (defaults to current month).
          * @returns {Object} The formatted report containing filtered costs and the calculated total.

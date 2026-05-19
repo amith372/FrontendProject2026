@@ -63,53 +63,53 @@ export default function AddCost() {
                 {/* Changed labels to English and removed explicit asterisks */}
                 <Grid xs={12} sm={6} md={3}>
                     <TextField
-                        label="Amount"
-                        type="number"
+                        label='Amount'
+                        type='number'
                         required
                         value={sum}
                         onChange={(e) => setSum(e.target.value)}
                         error={Number(sum) < 0}
-                        helperText={Number(sum) < 0 ? "Amount can only be positive number" : ""}
+                        helperText={Number(sum) < 0 ? 'Amount can only be positive number' : ''}
                         inputProps={{ min: 0 }}
                         fullWidth
-                        size="small"
+                        size='small'
                     />
                 </Grid>
 
                 <Grid xs={12} sm={6} md={3}>
                     <TextField
-                        label="Description"
+                        label='Description'
                         required
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         fullWidth
-                        size="small"
+                        size='small'
                     />
                 </Grid>
 
                 <Grid xs={12} sm={6} md={3}>
                     <TextField
-                        label="Category"
+                        label='Category'
                         required
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                         fullWidth
-                        size="small"
+                        size='small'
                     />
                 </Grid>
 
                 <Grid xs={12} sm={6} md={3}>
-                    <FormControl required fullWidth size="small">
+                    <FormControl required fullWidth size='small'>
                         <InputLabel>Currency</InputLabel>
                         <Select
                             value={currency}
-                            label="Currency"
+                            label='Currency'
                             onChange={(e) => setCurrency(e.target.value)}
                         >
-                            <MenuItem value="USD">USD ($)</MenuItem>
-                            <MenuItem value="ILS">ILS (₪)</MenuItem>
-                            <MenuItem value="EURO">EURO (€)</MenuItem>
-                            <MenuItem value="GBP">GBP (£)</MenuItem>
+                            <MenuItem value='USD'>USD ($)</MenuItem>
+                            <MenuItem value='ILS'>ILS (₪)</MenuItem>
+                            <MenuItem value='EURO'>EURO (€)</MenuItem>
+                            <MenuItem value='GBP'>GBP (£)</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
@@ -118,15 +118,15 @@ export default function AddCost() {
 
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
                 <Button
-                    type="submit"
-                    variant="contained"
-                    size="large"
+                    type='submit'
+                    variant='contained'
+                    size='large'
                     sx={{ minWidth: '200px' }}
                 >
                     Save Expense
                 </Button>
 
-                <Typography color="success.main" sx={{ mt: 1, minHeight: '24px', fontWeight: 'bold' }}>
+                <Typography color='success.main' sx={{ mt: 1, minHeight: '24px', fontWeight: 'bold' }}>
                     {message}
                 </Typography>
             </Box>
