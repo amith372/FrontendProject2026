@@ -13,7 +13,7 @@ function RateSettings() {
     const handleSaveUrl = () => {
         localStorage.setItem('exchangeRatesUrl', ratesUrl);
 
-        // Clear message after 3 seconds
+        //clear message after 3 seconds
         setTimeout(() => setStatus(''), 3000);
     };
 

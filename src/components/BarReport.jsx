@@ -3,7 +3,6 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 /**
  * BarReport Component.
  * Displays a bar chart representing total expenses for each month of the year.
- * Optimized for equal spacing between all 12 months.
  */
 export default function BarReport({ data }) {
     return (
@@ -17,9 +16,9 @@ export default function BarReport({ data }) {
 
                     <XAxis
                         dataKey="month"
-                        // interval={0} forces EVERY label to be shown, ensuring equal spacing
+                        // interval={0} forces every label to be shown, ensuring equal spacing
                         interval={0}
-                        // padding adds a little breathing room at the start and end of the axis
+                        // padding adds more space at the start and end of the axis
                         padding={{ left: 10, right: 10 }}
                         tick={{ fontSize: 12 }}
                     />

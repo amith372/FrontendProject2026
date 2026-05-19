@@ -11,12 +11,12 @@ const COLORS = ['#1976d2', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
  */
 export default function PieReport({ data }) {
     return (
-        // Added minWidth: 0 to prevent grid overflow, ensuring it stays responsive
+        // Added minWidth: 0 to prevent grid overflow, so it stays responsive
         <div style={{ width: '100%', height: 500, minWidth: 0 }}>
             <ResponsiveContainer>
                 <PieChart>
 
-                    {/* Changed outerRadius from a fixed 100 to "70%" to leave room for labels! */}
+                    {/* 70% radius to make space */}
                     <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius="70%" label>
                         {data.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

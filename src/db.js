@@ -30,16 +30,16 @@ export const db = {
      * @returns {Object} Returns the newly created cost object including the date.
      */
     addCost: function(cost) {
-        // Retrieve the current stringified data from local storage, or an empty array
+        // Retrieve the current stringed-data from local storage, or an empty array
         const dataString = localStorage.getItem(this.dbName) || '[]';
 
-        // Parse the JSON string back into a workable JavaScript array
+        // Parse the JSON string back into a js array
         const costs = JSON.parse(dataString);
 
-        // Generate the current date to attach to the new cost item
+        //Generate the current date to attach to the new cost item
         const today = new Date();
 
-        // Construct the new cost object according to the project requirements
+        // Construct the new cost object
         const newCost = {
             sum: cost.sum,
             currency: cost.currency,
@@ -47,7 +47,7 @@ export const db = {
             description: cost.description,
             date: {
                 day: today.getDate(),
-                month: today.getMonth() + 1, // JS months are 0-indexed, so we add 1
+                month: today.getMonth() + 1,
                 year: today.getFullYear()
             }
         };
@@ -67,7 +67,7 @@ export const db = {
      * @returns {Object} Returns a report object containing filtered costs and the total sum.
      */
     getReport: async function(currency, year, month) {
-        // Use current date as fallback if year or month are not provided
+        // Use current date if year or month are not provided
         const currentDate = new Date();
         const targetYear = year || currentDate.getFullYear();
         const targetMonth = month || (currentDate.getMonth() + 1);
@@ -94,7 +94,7 @@ export const db = {
         try {
             const response = await fetch(apiUrl);
 
-            // Check if the response status is strictly OK (200-299)
+            // Check if the response status is ok
             if (response.ok === false) {
                 throw new Error("HTTP error " + response.status);
             }
@@ -102,7 +102,7 @@ export const db = {
             // Parse the JSON data from the API response
             const responseData = await response.json();
 
-            // Extract the rates object (APIs usually wrap it in 'rates' or 'conversion_rates')
+            // Extract the rates object
             rates = responseData.rates || responseData.conversion_rates || responseData;
 
             if (rates["EUR"]) {
@@ -120,7 +120,7 @@ export const db = {
         // Iterate over each filtered cost to calculate the total sum in the target currency
         filteredCosts.forEach(item => {
             if (rates[item.currency] && rates[currency]) {
-                // Convert the original sum to USD (base currency), then to the target currency
+                // Convert the original sum to USD, then to the target currency
                 const sumInUsd = item.sum / rates[item.currency];
                 totalSum += (sumInUsd * rates[currency]);
             }
@@ -133,7 +133,7 @@ export const db = {
             costs: filteredCosts,
             total: {
                 currency: currency,
-                sum: Number(totalSum.toFixed(2)) // Round to 2 decimal places
+                sum: Number(totalSum.toFixed(2)) // round to dewcimal points
             },
             rates: rates
         };

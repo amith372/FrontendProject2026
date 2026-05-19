@@ -22,7 +22,7 @@ import './GetReport.css';
 
 /**
  * GetReport Component.
- * The central hub for generating and visualizing monthly expense reports and yearly trends.
+ * The main component for generating and visualizing monthly expense reports and yearly trends.
  * @returns {JSX.Element} The report controls and visualization charts.
  */
 export default function GetReport() {
@@ -34,7 +34,7 @@ export default function GetReport() {
     const [yearlyData, setYearlyData] = useState([]);
 
 
-    const handleGenerateReport = async () => {
+    /*const handleGenerateReport = async () => {
         const data = await db.getReport(currency, year, month);
         setReportData(data);
 
@@ -56,8 +56,60 @@ export default function GetReport() {
 
     useEffect(() => {
         handleGenerateReport();
-    }, [currency]);
+    }, [currency]);   */
 
+
+    // async helper to fetch and format data
+    const fetchReportData = async () => {
+        const data = await db.getReport(currency, year, month);
+
+        const promises = [];
+        for (let m = 1; m <= 12; m++) {
+            promises.push(db.getReport(currency, year, m));
+        }
+
+        const yearlyResults = await Promise.all(promises);
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        const formattedYearlyData = yearlyResults.map((res, i) => ({
+            month: monthNames[i],
+            amount: res.total.sum
+        }));
+
+        return { fetchedReport: data, fetchedYearly: formattedYearlyData };
+    };
+
+    // Button Click/event Handler then rerenders the ui with new info
+    const handleGenerateReport = async () => {
+        const { fetchedReport, fetchedYearly } = await fetchReportData(currency, year, month);
+        setReportData(fetchedReport);
+        setYearlyData(fetchedYearly);
+    };
+
+    // Reactive effect for Currency changes
+    useEffect(() => {
+        let flag = true;
+
+        const loadData = async () => {
+            const { fetchedReport, fetchedYearly } = await fetchReportData(currency, year, month);
+
+            // Only update state if the user hasn't switched currencies again int hte middle of the request
+            if (flag) {
+                setReportData(fetchedReport);
+                setYearlyData(fetchedYearly);
+            }
+        };
+
+        loadData();
+
+        // Cleanup function prevents state updates if effect reapplies
+        return () => {
+            flag = false;
+        };
+    }, [currency, year, month]);
+    
+
+    // Inser data into pie chart
     const pieData = useMemo(() => {
         if (!reportData) return [];
 

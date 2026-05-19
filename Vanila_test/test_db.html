@@ -6,7 +6,7 @@
 
   <meta charset="UTF-8">
 
-  <title>Title</title>
+  <title>Cost manager database test</title>
 
 </head>
 
@@ -16,16 +16,22 @@
 
     <script>
 
+      /**
+       * Test function to validate the database operations.
+       * Creates a test database, adds sample expenses, and retrieves a report.
+       */
       function test() {
 
         try{
-
+          // Initialize the database with a test name and version.
           const ob = db.openCostsDB("costsdb",1);
 
           const result1 = ob.addCost({sum:200, currency:"USD", category:"FOOD", description:"pizza"});
 
           const result2 = ob.addCost({sum:400, currency:"USD", category:"CAR", description:"fuel"});
 
+
+          // Verify database initialization succeeded.
           if(ob) {
 
             console.log("creating db succeeded");
@@ -44,12 +50,13 @@
 
           }
 
+          // Generate a report for the current month in USD and log the total.
           const data = db.getReport("USD");
-          console.log(data.total.sum);
+          console.log(`Report total: ${report.total.sum}`);
 
         } catch(exception) {
-
-          console.log(exception.message);
+          // Log any errors encountered during testing.
+          console.error('Test failed:', exception.message);
 
         }
 

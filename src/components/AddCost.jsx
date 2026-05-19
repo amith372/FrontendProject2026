@@ -5,7 +5,6 @@ import './AddCost.css';
 
 /**
  * AddCost Component - Handles user input for new expenses.
- * Fully translated to English with a clean horizontal layout.
  * @returns {JSX.Element} The rendered form.
  */
 export default function AddCost() {
@@ -22,15 +21,27 @@ export default function AddCost() {
     const handleAddCost = (e) => {
         e.preventDefault();
 
+        // Prevent negative numbers
         if (Number(sum) < 0) {
             return;
         }
 
+        // Remove accidental whitespace
+        const cleanCategory = category.trim();
+
+        // If the string is empty, default to an empty string
+        if (!cleanCategory) {
+            return '';
+        }
+
+        // formatting to capital first letter and small on the rest
+        const normalizedCategory = cleanCategory.charAt(0).toUpperCase() + cleanCategory.slice(1).toLowerCase();
+
         const newCost = {
             sum: Number(sum),
             currency: currency,
-            category: category,
-            description: description
+            category: normalizedCategory,
+            description: description.trim()
         };
 
         db.addCost(newCost);
