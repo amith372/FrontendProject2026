@@ -1,6 +1,6 @@
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const COLORS = ['#1976d2', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
+const colors = ['#1976d2', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
 
 /**
  * PieReport Component.
@@ -19,7 +19,7 @@ export default function PieReport({ data }) {
                     {/* 70% radius to make space */}
                     <Pie data={data} dataKey='value' nameKey='name' cx='50%' cy='50%' outerRadius='70%' label>
                         {data.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
                         ))}
                     </Pie>
 

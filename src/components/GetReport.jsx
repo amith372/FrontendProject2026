@@ -33,32 +33,6 @@ export default function GetReport() {
     const [reportData, setReportData] = useState(null);
     const [yearlyData, setYearlyData] = useState([]);
 
-
-    /*const handleGenerateReport = async () => {
-        const data = await db.getReport(currency, year, month);
-        setReportData(data);
-
-        const promises = [];
-        for (let m = 1; m <= 12; m++) {
-            promises.push(db.getReport(currency, year, m));
-        }
-
-        const yearlyResults = await Promise.all(promises);
-        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-        const formattedYearlyData = yearlyResults.map((res, i) => ({
-            month: monthNames[i],
-            amount: res.total.sum
-        }));
-
-        setYearlyData(formattedYearlyData);
-    };
-
-    useEffect(() => {
-        handleGenerateReport();
-    }, [currency]);   */
-
-
     // async helper to fetch and format data
     const fetchReportData = async () => {
         const data = await db.getReport(currency, year, month);
