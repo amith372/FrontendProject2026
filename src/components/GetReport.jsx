@@ -83,7 +83,7 @@ export default function GetReport() {
     }, [currency, year, month]);
     
 
-    // Inser data into pie chart
+    // Insert data into pie chart
     const pieData = useMemo(() => {
         if (!reportData) return [];
 
