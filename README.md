@@ -24,10 +24,12 @@ UI of a table that represents the detailed expenses of the chosen month from the
 
 ### Yearly Expense Bar Chart
 UI visualization for the yearly expenses in a bar chart diagram.
+
 ![Bar Chart](screenshots/barChart.jpg)
 
 ### Monthly Expense Pie Chart
 UI of a pie chart that shows monthly expenses.
+
 ![Pie Chart](screenshots/pieChart.jpg)
 
 ## Technologies Used
