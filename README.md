@@ -1,16 +1,52 @@
-# React + Vite
+# Cost Management Application - Frontend Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Course:** Client-Side Development
 
-Currently, two official plugins are available:
+## Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This repository contains the frontend implementation of a comprehensive cost management application. It was developed as a final project for the Client-Side Development course to demonstrate proficiency in modern web development practices. The application provides a robust user interface for individuals to actively track their personal expenses, categorize their spending, and generate detailed monthly reports.
 
-## React Compiler
+The project emphasizes state management, component-based architecture, and integration with a backend REST API to simulate a real-world application environment.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Application UI
 
-## Expanding the ESLint configuration
+### Add New Expense
+UI for adding a new expense.
+![Add New Expense](screenshot/addNewExpense.jpg)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Generate Report
+UI form to select the parameters (month and year) for generating reports and diagrams.
+![Generate Report](screenshot/generateReport.jpg)
+
+### Monthly Expense Report Table
+UI of a table that represents the detailed expenses of the chosen month from the generate report form.
+![Get Report](screenshot/getReport.jpg)
+
+### Yearly Expense Bar Chart
+UI visualization for the yearly expenses in a bar chart diagram.
+![Bar Chart](screenshot/barChart.jpg)
+
+### Monthly Expense Pie Chart
+UI of a pie chart that shows monthly expenses.
+![Pie Chart](screenshot/pieChart.jpg)
+
+## Technologies Used
+
+* **React:** Core library for building the user interface using a component-driven approach.
+* **Vite:** Next-generation frontend tooling utilized for rapid development and optimized builds.
+* **Material-UI (MUI):** Comprehensive suite of UI tools and React components for implementing a responsive and accessible design system.
+* **Recharts:** Composable charting library built on React components, used for rendering data visualizations.
+
+## Core Functionality and Features
+
+* **Cost Entry System:** A dedicated interface allowing users to log new expenses. Each entry allows specifying a predefined category, a textual description, and the monetary amount.
+* **Report Generation Controls:** Form interface to dynamically select the desired month and year for retrieving cost data and rendering visualizations.
+* **Monthly Reporting:** Users can request and view a detailed tabular breakdown of their costs filtered by a specific month and year.
+* **Data Visualizations:** To enhance data comprehension, the application translates numerical data into visual formats, providing both bar charts and pie charts to illustrate expense distributions across different categories.
+* **User Profiles:** A management module for viewing and handling basic user information.
+
+## Authors
+
+* Abed el hafeeth Haj Yahia
+* Lior Mizrachi
+* Amit Hazan
