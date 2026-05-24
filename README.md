@@ -12,23 +12,23 @@ The project emphasizes state management, component-based architecture, and integ
 
 ### Add New Expense
 UI for adding a new expense.
-![Add New Expense](screenshot/addNewExpense.jpg)
+![Add New Expense](screenshots/addNewExpense.jpg)
 
 ### Generate Report
 UI form to select the parameters (month and year) for generating reports and diagrams.
-![Generate Report](screenshot/generateReport.jpg)
+![Generate Report](screenshots/generateReport.jpg)
 
 ### Monthly Expense Report Table
 UI of a table that represents the detailed expenses of the chosen month from the generate report form.
-![Get Report](screenshot/getReport.jpg)
+![Get Report](screenshots/getReport.jpg)
 
 ### Yearly Expense Bar Chart
 UI visualization for the yearly expenses in a bar chart diagram.
-![Bar Chart](screenshot/barChart.jpg)
+![Bar Chart](screenshots/barChart.jpg)
 
 ### Monthly Expense Pie Chart
 UI of a pie chart that shows monthly expenses.
-![Pie Chart](screenshot/pieChart.jpg)
+![Pie Chart](screenshots/pieChart.jpg)
 
 ## Technologies Used
 
