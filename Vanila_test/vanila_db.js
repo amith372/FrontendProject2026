@@ -36,7 +36,7 @@
             const savedUrl = localStorage.getItem('exchangeRatesUrl');
 
             //use the provided url if present, otherwise use default rates from json
-            const defaultUrl = './rates.json';
+            const defaultUrl = 'https://simpleapi-04mo.onrender.com/rates.json';
 
             // Initiate the network request to grab the latest rates
             const apiUrl = savedUrl || defaultUrl;

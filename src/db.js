@@ -83,7 +83,7 @@ export const db = {
 
         const savedUrl = localStorage.getItem('exchangeRatesUrl');
 
-        const defaultUrl = '/rates.json';
+        const defaultUrl = 'https://simpleapi-04mo.onrender.com/rates.json';
 
         // Case the user entered url
         const apiUrl = savedUrl || defaultUrl;
