@@ -1,71 +1,64 @@
 <!DOCTYPE html>
 
-<html lang='en'>
+<html lang="en">
 
 <head>
 
-  <meta charset='UTF-8'>
+  <meta charset="UTF-8">
 
-  <title>Cost manager database test</title>
+  <title>Title</title>
 
 </head>
 
-  <body>
+<body>
 
-    <script src='vanila_db.js'></script>
+<script src="vanila_db.js"></script>
 
-    <script>
+<script>
 
-      /**
-       * Test function to validate the database operations.
-       * Creates a test database, adds sample expenses, and retrieves a report.
-       */
-      function test() {
+  function test() {
 
-        try{
-          // Initialize the database with a test name and version.
-          const ob = db.openCostsDB('costsdb',1);
+    try{
 
-          const result1 = ob.addCost({sum:200, currency:'USD', category:'FOOD', description:'pizza'});
+      const ob = db.openCostsDB("costsdb",1);
 
-          const result2 = ob.addCost({sum:400, currency:'USD', category:'CAR', description:'fuel'});
+      const result1 = ob.addCost({sum:200, currency:"USD", category:"FOOD", description:"pizza"});
 
+      const result2 = ob.addCost({sum:400, currency:"USD", category:"CAR", description:"fuel"});
 
-          // Verify database initialization succeeded.
-          if(ob) {
+      if(ob) {
 
-            console.log('creating db succeeded');
-
-          }
-
-          if(result1) {
-
-            console.log('adding 1st cost item succeeded');
-
-          }
-
-          if(result2) {
-
-            console.log('adding 2nd cost item succeeded');
-
-          }
-
-          // Generate a report for the current month in USD and log the total.
-          const data = db.getReport('USD');
-          console.log(`Report total: ${report.total.sum}`);
-
-        } catch(exception) {
-          // Log any errors encountered during testing.
-          console.error('Test failed:', exception.message);
-
-        }
+        console.log("creating db succeeded");
 
       }
 
-      test()
+      if(result1) {
 
-    </script>
+        console.log("adding 1st cost item succeeded");
 
-  </body>
+      }
+
+      if(result2) {
+
+        console.log("adding 2nd cost item succeeded");
+
+      }
+
+      const data = db.getReport("USD");
+      console.log(data.total.sum);
+
+    } catch(exception) {
+
+      console.log(exception.message);
+
+    }
+
+  }
+
+  test()
+
+</script>
+
+</body>
 
 </html>
