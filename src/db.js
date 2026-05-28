@@ -13,6 +13,7 @@ export const db = {
     openCostsDB: function(databaseName, databaseVersion) {
         // Set the database name as a property of the db object
         this.dbName = databaseName;
+        this.dbVersion = databaseVersion;
 
         // Check if a database with this name already exists in the browser
         if (!localStorage.getItem(this.dbName)) {

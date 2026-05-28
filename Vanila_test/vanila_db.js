@@ -14,6 +14,7 @@
 
         openCostsDB: function(databaseName, databaseVersion) {
             this.dbName = databaseName;
+            this.dbVersion = databaseVersion;
 
             // If the database doesn't exist in localStorage yet, initialize it with an empty array.
             if (!localStorage.getItem(this.dbName)) {
@@ -103,7 +104,7 @@
         getReport: function(currency, year, month) {
             const currentDate = new Date();
 
-            // If year and month werent provided, use current date
+            // If year and month weren't provided, use current date
             const targetYear = year || currentDate.getFullYear();
             const targetMonth = month || (currentDate.getMonth() + 1);
 
