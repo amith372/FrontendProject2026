@@ -35,7 +35,7 @@ function App() {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid xs={12}>
                     <RateSettings />
                 </Grid>
 
