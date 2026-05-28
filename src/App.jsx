@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { Container, Grid, Typography, Paper } from '@mui/material';
-import { db } from './db';
 import AddCost from './components/AddCost.jsx';
 import GetReport from './components/GetReport.jsx';
 import './App.css';
@@ -12,10 +10,6 @@ import RateSettings from './components/RateSettings';
  * @returns {JSX.Element} The rendered dashboard.
  */
 function App() {
-
-    useEffect(() => {
-        db.openCostsDB('costsdb', 1);
-    }, []);
 
     return (
         <Container maxWidth='xl' sx={{ py: 4 }}>

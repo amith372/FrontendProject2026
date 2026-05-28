@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Box, TextField, Button, Typography, Paper } from '@mui/material';
+import { db } from '../db.js';
 
 
 /**
@@ -12,9 +13,24 @@ function RateSettings() {
 
     const handleSaveUrl = () => {
         localStorage.setItem('exchangeRatesUrl', ratesUrl);
-
-        //clear message after 3 seconds
-        setTimeout(() => setStatus(''), 3000);
+        
+        if (ratesUrl) {
+            // Network request is now handled by the UI/Service layer
+            fetch(ratesUrl)
+                .then((res) => {
+                    if (!res.ok) throw new Error('Failed to fetch from URL');
+                    return res.json();
+                })
+                .then((data) => {
+                    db.setRates(data); // Synchronously hand over the data to the DB
+                    setStatus('Settings saved and rates updated successfully!');
+                    setTimeout(() => setStatus(''), 5000);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    setStatus('Failed to fetch rates. Please check the URL.');
+                });
+        }
     };
 
     return (

@@ -44,14 +44,12 @@ export default function GetReport() {
         // $ Removed await keyword
         const data = db.getReport(currency, year, month);
 
-        const promises = [];
+        const yearlyResults = [];
         for (let m = 1; m <= 12; m++) {
-            // $ Pushing synchronous data directly instead of promises
-            promises.push(db.getReport(currency, year, m));
+            // Pushing synchronous data directly
+            yearlyResults.push(db.getReport(currency, year, m));
         }
 
-        // $ Removed await Promise.all since the results are synchronous
-        const yearlyResults = promises;
         const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         const formattedYearlyData = yearlyResults.map((res, i) => ({

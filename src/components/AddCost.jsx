@@ -70,7 +70,7 @@ export default function AddCost() {
                         onChange={(e) => setSum(e.target.value)}
                         error={Number(sum) < 0}
                         helperText={Number(sum) < 0 ? 'Amount can only be positive number' : ''}
-                        inputprops={{ min: 0 }}
+                        inputProps={{ min: 0 }}
                         fullWidth
                         size='small'
                     />

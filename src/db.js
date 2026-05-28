@@ -8,6 +8,16 @@ export const db = {
     rates: {'USD':1, 'GBP':0.79, 'EURO':0.93, 'ILS':3.72},
 
     /**
+     * Synchronously updates the exchange rates in the database.
+     * @param {Object} newRates - A dictionary of currency exchange rates.
+     */
+    setRates: function(newRates) {
+        if (newRates && typeof newRates === 'object') {
+            this.rates = newRates;
+        }
+    },
+
+    /**
      * Initializes the local storage database if it doesn't exist.
      * * @param {string} databaseName - The key name used in local storage.
      * @param {number} databaseVersion - The version of the database.

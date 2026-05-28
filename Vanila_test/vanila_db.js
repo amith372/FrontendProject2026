@@ -12,6 +12,16 @@
         // Default exchange rates is USD
         rates: {'USD':1, 'GBP':0.8, 'EURO':0.9, 'ILS':3.7},
 
+        /**
+         * Synchronously updates the exchange rates dictionary.
+         * @param {Object} newRates - Dictionary of rates.
+         */
+        setRates: function(newRates) {
+            if (newRates) {
+                this.rates = newRates;
+            }
+        },
+
         openCostsDB: function(databaseName, databaseVersion) {
             this.dbName = databaseName;
             this.dbVersion = databaseVersion;
