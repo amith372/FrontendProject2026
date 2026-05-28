@@ -1,4 +1,5 @@
-import { useState, useMemo, useEffect } from 'react';
+// $ Removed useEffect from imports
+import { useState, useMemo } from 'react';
 import {
     Box,
     Button,
@@ -18,6 +19,7 @@ import {
 import { db } from '../db';
 import PieReport from './PieReport.jsx';
 import BarReport from './BarReport.jsx';
+import GetRate from "./GetRates.jsx";
 import './GetReport.css';
 
 /**
@@ -33,16 +35,23 @@ export default function GetReport() {
     const [reportData, setReportData] = useState(null);
     const [yearlyData, setYearlyData] = useState([]);
 
+    // $ Added state to track if rates are ready
+    const [ratesReady, setRatesReady] = useState(false);
+
+    // $ Removed async keyword
     // async helper to fetch and format data
-    const fetchReportData = async () => {
-        const data = await db.getReport(currency, year, month);
+    const fetchReportData = () => {
+        // $ Removed await keyword
+        const data = db.getReport(currency, year, month);
 
         const promises = [];
         for (let m = 1; m <= 12; m++) {
+            // $ Pushing synchronous data directly instead of promises
             promises.push(db.getReport(currency, year, m));
         }
 
-        const yearlyResults = await Promise.all(promises);
+        // $ Removed await Promise.all since the results are synchronous
+        const yearlyResults = promises;
         const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         const formattedYearlyData = yearlyResults.map((res, i) => ({
@@ -53,42 +62,27 @@ export default function GetReport() {
         return { fetchedReport: data, fetchedYearly: formattedYearlyData };
     };
 
+    // $ Removed async keyword
     // Button Click/event Handler then rerenders the ui with new info
-    const handleGenerateReport = async () => {
-        const { fetchedReport, fetchedYearly } = await fetchReportData(currency, year, month);
+    const handleGenerateReport = () => {
+        // $ Added guard to prevent generating report if rates aren't ready
+        if (!ratesReady) return;
+
+        // $ Removed await keyword and removed arguments to match function definition
+        const { fetchedReport, fetchedYearly } = fetchReportData();
         setReportData(fetchedReport);
         setYearlyData(fetchedYearly);
     };
 
-    // Reactive effect for Currency changes
-    useEffect(() => {
-        let flag = true;
-
-        const loadData = async () => {
-            const { fetchedReport, fetchedYearly } = await fetchReportData(currency, year, month);
-
-            // Only update state if the user hasn't switched currencies again int hte middle of the request
-            if (flag) {
-                setReportData(fetchedReport);
-                setYearlyData(fetchedYearly);
-            }
-        };
-
-        loadData();
-
-        // Cleanup function prevents state updates if effect reapplies
-        return () => {
-            flag = false;
-        };
-    }, [currency, year, month]);
-    
+    // $ REMOVED the entire useEffect block from here so data is only fetched on button click
 
     // Insert data into pie chart
     const pieData = useMemo(() => {
         if (!reportData) return [];
 
         const catMap = {};
-        const rates = reportData.rates;
+        // $ Added fallback to db.rates
+        const rates = reportData.rates || db.rates;
         const targetCurrency = currency;
 
         reportData.costs.forEach(item => {
@@ -107,20 +101,26 @@ export default function GetReport() {
             name: k,
             value: Number(catMap[k].toFixed(2))
         }));
-    }, [reportData,currency]);
+    }, [reportData]);
 
     return (
         <Box>
+            {/* $ Render GetRate to fetch data behind the scenes */}
+            <GetRate onRatesLoaded={() => setRatesReady(true)} />
+
             <Box className='report-controls'>
                 <FormControl size='small' className='control-field'>
                     <InputLabel>Month</InputLabel>
-                    <Select value={month} label='Month' onChange={e => setMonth(e.target.value)}>
+                    {/* $ Added variant="outlined" to silence MUI console warnings */}
+                    <Select variant="outlined" value={month} label='Month' onChange={e => setMonth(e.target.value)}>
                         {[1,2,3,4,5,6,7,8,9,10,11,12].map(m => <MenuItem key={m} value={m}>{m}</MenuItem>)}
                     </Select>
                 </FormControl>
 
                 <FormControl size='small' className='control-field'>
                     <TextField
+                        // $ Added variant="outlined"
+                        variant="outlined"
                         size='small'
                         label='Year'
                         type='number'
@@ -132,7 +132,8 @@ export default function GetReport() {
 
                 <FormControl size='small' className='control-field'>
                     <InputLabel>Currency</InputLabel>
-                    <Select value={currency} label='Currency' onChange={e => setCurrency(e.target.value)}>
+                    {/* $ Added variant="outlined" */}
+                    <Select variant="outlined" value={currency} label='Currency' onChange={e => setCurrency(e.target.value)}>
                         <MenuItem value='USD'>USD</MenuItem>
                         <MenuItem value='ILS'>ILS</MenuItem>
                         <MenuItem value='EURO'>EURO</MenuItem>
@@ -140,7 +141,8 @@ export default function GetReport() {
                     </Select>
                 </FormControl>
 
-                <Button variant='contained' color='primary' onClick={handleGenerateReport}>
+                {/* $ Added disabled property tied to ratesReady state */}
+                <Button variant='contained' color='primary' onClick={handleGenerateReport} disabled={!ratesReady}>
                     Generate Report
                 </Button>
             </Box>

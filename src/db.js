@@ -4,6 +4,9 @@
  */
 export const db = {
 
+    // $ Added synchronous rates base object
+    rates: {'USD':1, 'GBP':0.79, 'EURO':0.93, 'ILS':3.72},
+
     /**
      * Initializes the local storage database if it doesn't exist.
      * * @param {string} databaseName - The key name used in local storage.
@@ -67,7 +70,8 @@ export const db = {
      * @param {number} [month] - The target month for the report.
      * @returns {Object} Returns a report object containing filtered costs and the total sum.
      */
-    getReport: async function(currency, year, month) {
+    // $ Removed async keyword
+    getReport: function(currency, year, month) {
         // Use current date if year or month are not provided
         const currentDate = new Date();
         const targetYear = year || currentDate.getFullYear();
@@ -82,48 +86,18 @@ export const db = {
             item.date.year === targetYear && item.date.month === targetMonth
         );
 
-        const savedUrl = localStorage.getItem('exchangeRatesUrl');
-
-        const defaultUrl = 'https://simpleapi-04mo.onrender.com/rates.json';
-
-        // Case the user entered url
-        const apiUrl = savedUrl || defaultUrl;
-
-        let rates = {};
-
-        // Attempt to fetch the live exchange rates from the real API
-        try {
-            const response = await fetch(apiUrl);
-
-            // Check if the response status is ok
-            if (response.ok === false) {
-                throw new Error('HTTP error ' + response.status);
-            }
-
-            // Parse the JSON data from the API response
-            const responseData = await response.json();
-
-            // Extract the rates object
-            rates = responseData.rates || responseData.conversion_rates || responseData;
-
-            if (rates['EUR']) {
-                rates['EURO'] = rates['EUR'];
-            }
-
-        } catch (error) {
-            // Fallback to default manual rates in case of network failure or API limit reached
-            console.error('Failed to fetch live exchange rates:', error);
-            rates = {'USD':1, 'GBP':0.79, 'EURO':0.93, 'ILS':3.72};
-        }
+        // $ REMOVED the entire URL setup and fetch block here
 
         let totalSum = 0;
 
         // Iterate over each filtered cost to calculate the total sum in the target currency
         filteredCosts.forEach(item => {
-            if (rates[item.currency] && rates[currency]) {
+            // $ Updated from local 'rates' variable to 'this.rates'
+            if (this.rates[item.currency] && this.rates[currency]) {
                 // Convert the original sum to USD, then to the target currency
-                const sumInUsd = item.sum / rates[item.currency];
-                totalSum += (sumInUsd * rates[currency]);
+                // $ Updated from local 'rates' variable to 'this.rates'
+                const sumInUsd = item.sum / this.rates[item.currency];
+                totalSum += (sumInUsd * this.rates[currency]);
             }
         });
 
@@ -136,7 +110,8 @@ export const db = {
                 currency: currency,
                 sum: Number(totalSum.toFixed(2)) // round to dewcimal points
             },
-            rates: rates
+            // $ Return this.rates instead of local variable
+            rates: this.rates
         };
     }
 };
