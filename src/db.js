@@ -3,8 +3,7 @@
  * Utilizes the browser's LocalStorage to persist user costs.
  */
 export const db = {
-
-    // $ Added synchronous rates base object
+    // Default exchange rates is USD
     rates: {'USD':1, 'GBP':0.79, 'EURO':0.93, 'ILS':3.72},
 
     /**
@@ -80,7 +79,7 @@ export const db = {
      * @param {number} [month] - The target month for the report.
      * @returns {Object} Returns a report object containing filtered costs and the total sum.
      */
-    // $ Removed async keyword
+    //
     getReport: function(currency, year, month) {
         // Use current date if year or month are not provided
         const currentDate = new Date();
@@ -96,16 +95,13 @@ export const db = {
             item.date.year === targetYear && item.date.month === targetMonth
         );
 
-        // $ REMOVED the entire URL setup and fetch block here
 
         let totalSum = 0;
 
         // Iterate over each filtered cost to calculate the total sum in the target currency
         filteredCosts.forEach(item => {
-            // $ Updated from local 'rates' variable to 'this.rates'
             if (this.rates[item.currency] && this.rates[currency]) {
                 // Convert the original sum to USD, then to the target currency
-                // $ Updated from local 'rates' variable to 'this.rates'
                 const sumInUsd = item.sum / this.rates[item.currency];
                 totalSum += (sumInUsd * this.rates[currency]);
             }
@@ -118,9 +114,8 @@ export const db = {
             costs: filteredCosts,
             total: {
                 currency: currency,
-                sum: Number(totalSum.toFixed(2)) // round to dewcimal points
+                sum: Number(totalSum.toFixed(2)) // round to decimal points
             },
-            // $ Return this.rates instead of local variable
             rates: this.rates
         };
     }

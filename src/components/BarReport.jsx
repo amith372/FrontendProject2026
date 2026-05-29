@@ -25,12 +25,11 @@ export default function BarReport({ data }) {
 
                     <YAxis tick={{ fontSize: 12 }} />
                     <Tooltip cursor={{ fill: '#f5f5f5' }} />
-
+                    {/*Settings of the bars themselves */}
                     <Bar
                         dataKey='amount'
                         fill='#2ecc71'
                         name='Amount'
-                        // Fixed bar size helps maintain the look regardless of data availability
                         barSize={30}
                         radius={[4, 4, 0, 0]}
                     />

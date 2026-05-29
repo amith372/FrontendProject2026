@@ -60,7 +60,7 @@ export default function AddCost() {
 
             <Grid container spacing={3} sx={{ alignItems: 'center' }}>
 
-                {/* Changed labels to English and removed explicit asterisks */}
+                {/* Insert amount (can't be negative) */}
                 <Grid xs={12} sm={6} md={3}>
                     <TextField
                         label='Amount'
@@ -75,7 +75,7 @@ export default function AddCost() {
                         size='small'
                     />
                 </Grid>
-
+                {/*Item description */}
                 <Grid xs={12} sm={6} md={3}>
                     <TextField
                         label='Description'
@@ -86,7 +86,7 @@ export default function AddCost() {
                         size='small'
                     />
                 </Grid>
-
+                {/*Category of the item */}
                 <Grid xs={12} sm={6} md={3}>
                     <TextField
                         label='Category'
@@ -97,7 +97,7 @@ export default function AddCost() {
                         size='small'
                     />
                 </Grid>
-
+                {/*The currency the price is on */}
                 <Grid xs={12} sm={6} md={3}>
                     <FormControl required fullWidth size='small'>
                         <InputLabel>Currency</InputLabel>
@@ -115,7 +115,7 @@ export default function AddCost() {
                 </Grid>
 
             </Grid>
-
+            {/*Save expense key */}
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
                 <Button
                     type='submit'
@@ -125,7 +125,7 @@ export default function AddCost() {
                 >
                     Save Expense
                 </Button>
-
+                {/*Success Message */}
                 <Typography color='success.main' sx={{ mt: 1, minHeight: '24px', fontWeight: 'bold' }}>
                     {message}
                 </Typography>

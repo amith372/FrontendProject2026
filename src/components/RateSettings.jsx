@@ -15,7 +15,7 @@ function RateSettings() {
         localStorage.setItem('exchangeRatesUrl', ratesUrl);
         
         if (ratesUrl) {
-            // Network request is now handled by the UI/Service layer
+            // Trying to fetch data from url
             fetch(ratesUrl)
                 .then((res) => {
                     if (!res.ok) throw new Error('Failed to fetch from URL');
@@ -40,6 +40,7 @@ function RateSettings() {
             </Typography>
             <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
                 <TextField
+                    {/*Text insert for json url link */}
                     fullWidth
                     size='small'
                     label='Exchange Rates JSON URL'
@@ -50,6 +51,7 @@ function RateSettings() {
                     sx={{ flex: 1, minWidth: '200px' }}
                 />
                 <Button
+                    {/*The save button */}
                     variant='contained'
                     color='secondary'
                     onClick={handleSaveUrl}

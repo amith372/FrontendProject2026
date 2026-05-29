@@ -1,5 +1,3 @@
-// Vanila_test/vanila_db.js
-
 (function() {
 
     /**
@@ -31,12 +29,9 @@
                 localStorage.setItem(this.dbName, JSON.stringify([]));
             }
 
-            // $ Removed this.fetchRatesInBackground() call to make it 100% synchronous for the tester
-
             return this;
         },
 
-        // $ Removed fetchRatesInBackground function completely since the tester can't wait for network
 
         /**
          * Adds a new cost record to the database.

@@ -17,7 +17,7 @@ export default function GetRate({ onRatesLoaded }) {
                 // Check if user has a custom URL, otherwise use default
                 const savedUrl = localStorage.getItem('exchangeRatesUrl');
 
-                // $ Changed defaultUrl to point to the local file in the public folder
+                // defaultUrl to point to the local file in the public folder
                 const defaultUrl = '/rates.json';
                 const apiUrl = savedUrl || defaultUrl;
 
@@ -47,16 +47,16 @@ export default function GetRate({ onRatesLoaded }) {
     }, [onRatesLoaded]);
 
     return (
+        // show load progress to the user
         <Box sx={{ mb: 3, p: 1, borderRadius: 1 }}>
             {loading ? (
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                     <CircularProgress size={16} />
-                    {/* $ Updated text to be more generic since it might be a local file now */}
                     <Typography variant="body2" color="textSecondary">Loading exchange rates...</Typography>
                 </Box>
             ) : error ? (
                 <Typography variant="body2" color="error">{error}</Typography>
-            ) : null /* Hide quietly on success to keep UI clean */}
+            ) : null }
         </Box>
     );
 }

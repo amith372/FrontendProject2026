@@ -1,4 +1,3 @@
-// $ Removed useEffect from imports
 import { useState, useMemo } from 'react';
 import {
     Box,
@@ -35,13 +34,11 @@ export default function GetReport() {
     const [reportData, setReportData] = useState(null);
     const [yearlyData, setYearlyData] = useState([]);
 
-    // $ Added state to track if rates are ready
+    // state to track if rates are ready
     const [ratesReady, setRatesReady] = useState(false);
 
-    // $ Removed async keyword
     // async helper to fetch and format data
     const fetchReportData = () => {
-        // $ Removed await keyword
         const data = db.getReport(currency, year, month);
 
         const yearlyResults = [];
@@ -60,29 +57,27 @@ export default function GetReport() {
         return { fetchedReport: data, fetchedYearly: formattedYearlyData };
     };
 
-    // $ Removed async keyword
     // Button Click/event Handler then rerenders the ui with new info
     const handleGenerateReport = () => {
-        // $ Added guard to prevent generating report if rates aren't ready
+
+        // Incase rate isn't ready
         if (!ratesReady) return;
 
-        // $ Removed await keyword and removed arguments to match function definition
         const { fetchedReport, fetchedYearly } = fetchReportData();
         setReportData(fetchedReport);
         setYearlyData(fetchedYearly);
     };
-
-    // $ REMOVED the entire useEffect block from here so data is only fetched on button click
 
     // Insert data into pie chart
     const pieData = useMemo(() => {
         if (!reportData) return [];
 
         const catMap = {};
-        // $ Added fallback to db.rates
+        // db.rates incase rates is empty
         const rates = reportData.rates || db.rates;
         const targetCurrency = currency;
 
+        // Adjusting prices based on chosen currency
         reportData.costs.forEach(item => {
             let convertedSum = item.sum;
 
@@ -95,6 +90,7 @@ export default function GetReport() {
             catMap[item.category] = (catMap[item.category] || 0) + convertedSum;
         });
 
+        // mapping keys per category
         return Object.keys(catMap).map(k => ({
             name: k,
             value: Number(catMap[k].toFixed(2))
@@ -103,13 +99,13 @@ export default function GetReport() {
 
     return (
         <Box>
-            {/* $ Render GetRate to fetch data behind the scenes */}
+            {/* Render GetRate to fetch data */}
             <GetRate onRatesLoaded={() => setRatesReady(true)} />
 
             <Box className='report-controls'>
                 <FormControl size='small' className='control-field'>
                     <InputLabel>Month</InputLabel>
-                    {/* $ Added variant="outlined" to silence MUI console warnings */}
+                    {/* mapping months*/}
                     <Select variant="outlined" value={month} label='Month' onChange={e => setMonth(e.target.value)}>
                         {[1,2,3,4,5,6,7,8,9,10,11,12].map(m => <MenuItem key={m} value={m}>{m}</MenuItem>)}
                     </Select>
@@ -117,7 +113,7 @@ export default function GetReport() {
 
                 <FormControl size='small' className='control-field'>
                     <TextField
-                        // $ Added variant="outlined"
+                        // Choosing a year
                         variant="outlined"
                         size='small'
                         label='Year'
@@ -130,7 +126,7 @@ export default function GetReport() {
 
                 <FormControl size='small' className='control-field'>
                     <InputLabel>Currency</InputLabel>
-                    {/* $ Added variant="outlined" */}
+                    {/* Choosing currency */}
                     <Select variant="outlined" value={currency} label='Currency' onChange={e => setCurrency(e.target.value)}>
                         <MenuItem value='USD'>USD</MenuItem>
                         <MenuItem value='ILS'>ILS</MenuItem>
@@ -139,7 +135,7 @@ export default function GetReport() {
                     </Select>
                 </FormControl>
 
-                {/* $ Added disabled property tied to ratesReady state */}
+                {/* disabled property tied to ratesReady state */}
                 <Button variant='contained' color='primary' onClick={handleGenerateReport} disabled={!ratesReady}>
                     Generate Report
                 </Button>
@@ -149,6 +145,7 @@ export default function GetReport() {
                 <Box>
                     <Table size='small' sx={{ mb: 2 }}>
                         <TableHead>
+                            {/* Showing list of added items */}
                             <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
                                 <TableCell><b>Date</b></TableCell>
                                 <TableCell><b>Description</b></TableCell>
@@ -157,6 +154,7 @@ export default function GetReport() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
+                            {/* Renders the detailed costs table and*/}
                             {reportData.costs.map((item, i) => (
                                 <TableRow key={i}>
                                     <TableCell>{item.date.month}/{item.date.day}</TableCell>
@@ -179,14 +177,14 @@ export default function GetReport() {
 
                     <Divider sx={{ my: 4 }} />
 
-                    {/* New Flexbox Layout for charts to push them to extreme ends */}
+                    {/* Charts */}
                     <Box sx={{
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'flex-start',
                         width: '100%',
                         mt: 4,
-                        pb: 6 // Extra padding at bottom to prevent border overlap
+                        pb: 6
                     }}>
 
                         {/* Left Chart (Pie) */}
@@ -197,7 +195,7 @@ export default function GetReport() {
                             <PieReport data={pieData} />
                         </Box>
 
-                        {/* Right Chart (Bar) - marginLeft: 'auto' forces it to the right end */}
+                        {/* Right Chart (Bar) */}
                         <Box sx={{ width: '45%', ml: 'auto' }}>
                             <Typography align='center' variant='subtitle1' color='textSecondary' gutterBottom sx={{ fontWeight: 'bold' }}>
                                 Yearly Trend (Monthly Totals)

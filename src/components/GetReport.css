@@ -1,5 +1,3 @@
-/* src/components/GetReport.css */
-
 /* Container for the controls (dropdowns and button) */
 .report-controls {
     display: flex;
@@ -14,7 +12,7 @@
     min-width: 120px;
 }
 
-/* Add a hover effect to table rows for better UX */
+/* hover effect to table rows for better UX */
 .MuiTableRow-root:hover {
     background-color: #fcfcfc;
 }
