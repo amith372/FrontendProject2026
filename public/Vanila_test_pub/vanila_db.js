@@ -1,5 +1,3 @@
-// Vanila_test/vanila_db.js
-
 (function() {
 
     /**
@@ -12,6 +10,16 @@
         // Default exchange rates is USD
         rates: {'USD':1, 'GBP':0.8, 'EURO':0.9, 'ILS':3.7},
 
+        /**
+         * Synchronously updates the exchange rates dictionary.
+         * @param {Object} newRates - Dictionary of rates.
+         */
+        setRates: function(newRates) {
+            if (newRates) {
+                this.rates = newRates;
+            }
+        },
+
         openCostsDB: function(databaseName, databaseVersion) {
             this.dbName = databaseName;
             this.dbVersion = databaseVersion;
@@ -21,12 +29,9 @@
                 localStorage.setItem(this.dbName, JSON.stringify([]));
             }
 
-            // $ Removed this.fetchRatesInBackground() call to make it 100% synchronous for the tester
-
             return this;
         },
 
-        // $ Removed fetchRatesInBackground function completely since the tester can't wait for network
 
         /**
          * Adds a new cost record to the database.
