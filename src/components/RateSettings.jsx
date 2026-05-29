@@ -40,7 +40,7 @@ function RateSettings() {
             </Typography>
             <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
                 <TextField
-                    {/*Text insert for json url link */}
+                    //Text insert for json url link
                     fullWidth
                     size='small'
                     label='Exchange Rates JSON URL'
@@ -51,7 +51,7 @@ function RateSettings() {
                     sx={{ flex: 1, minWidth: '200px' }}
                 />
                 <Button
-                    {/*The save button */}
+                    //The save button
                     variant='contained'
                     color='secondary'
                     onClick={handleSaveUrl}
