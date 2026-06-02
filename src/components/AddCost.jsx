@@ -81,7 +81,7 @@ export default function AddCost() {
                         label='Description'
                         required
                         value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        onChange={(e) => setDescription(e.target.value.trimStart())}
                         fullWidth
                         size='small'
                     />

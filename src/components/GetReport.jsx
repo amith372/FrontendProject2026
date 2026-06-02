@@ -120,7 +120,21 @@ export default function GetReport() {
                         type='number'
                         className='control-field'
                         value={year}
-                        onChange={(e) => setYear(Number(e.target.value))}
+                        // Prevent wrong inputs
+                        error={Number(year) < 0}
+                        helperText={Number(year) < 0 ? 'Year can only be positive number' : ''}
+                        onKeyDown={(e) => {
+                            if (e.key === '.' || e.key === 'e' || e.key === 'E' || e.key === '-') {
+                                e.preventDefault();
+                            }
+                        }}
+                        onChange={(e) => setYear(e.target.value === '' ? '' : Number(e.target.value))}
+                        onBlur={() => {
+                            if (year === '' || Number(year) <= 0) {
+                                setYear(new Date().getFullYear());
+                            }
+                        }}
+
                     />
                 </FormControl>
 
@@ -136,7 +150,7 @@ export default function GetReport() {
                 </FormControl>
 
                 {/* disabled property tied to ratesReady state */}
-                <Button variant='contained' color='primary' onClick={handleGenerateReport} disabled={!ratesReady}>
+                <Button variant='contained' color='primary' onClick={handleGenerateReport} disabled={!ratesReady || year === '' || Number(year) <= 0}>
                     Generate Report
                 </Button>
             </Box>
