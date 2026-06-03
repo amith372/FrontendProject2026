@@ -115,7 +115,7 @@ function RateSettings() {
                     sx={{ flex: 1, minWidth: '200px' }}
                 />
                 <Button
-					{/* button for saving*/}
+					// button for saving
                     variant='contained'
                     color='secondary'
                     onClick={handleSaveUrl}
@@ -127,7 +127,7 @@ function RateSettings() {
 
             {status && (
                 <Typography
-				{/* handling error /success*/}
+				 //handling error
                     variant='caption'
                     color={isError ? 'error.main' : 'success.main'}
                     sx={{ mt: 1, display: 'block', fontWeight: 'bold' }}
