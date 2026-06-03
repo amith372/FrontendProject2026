@@ -50,6 +50,7 @@ export default function GetReport() {
 
         const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+		// formating year
         const formattedYearlyData = yearlyResults.map((res, i) => ({
             month: monthNames[i],
             amount: res.total.sum
@@ -68,7 +69,8 @@ export default function GetReport() {
         setReportData(fetchedReport);
         setYearlyData(fetchedYearly);
     };
-
+	
+	// handling rate loading
     const handleRatesLoaded = useCallback(() => {
         setRatesReady(true);
     }, []);
@@ -86,7 +88,7 @@ export default function GetReport() {
         reportData.costs.forEach(item => {
             let convertedSum = item.sum;
 
-
+			// making sure both are valid before calculating
             if (rates[item.currency] && rates[targetCurrency]) {
                 const sumInUsd = item.sum / rates[item.currency];
                 convertedSum = sumInUsd * rates[targetCurrency];
@@ -133,6 +135,7 @@ export default function GetReport() {
                                 e.preventDefault();
                             }
                         }}
+						// handling year inputs
                         onChange={(e) => setYear(e.target.value === '' ? '' : Number(e.target.value))}
                         onBlur={() => {
                             if (year === '' || Number(year) <= 0) {
@@ -173,7 +176,7 @@ export default function GetReport() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {/* Renders the detailed costs table and*/}
+                            {/* Renders the detailed costs table*/}
                             {reportData.costs.map((item, i) => (
                                 <TableRow key={i}>
                                     <TableCell>{item.date.month}/{item.date.day}</TableCell>
@@ -184,6 +187,7 @@ export default function GetReport() {
                             ))}
 
                             <TableRow>
+								{/* Renders currency*/}
                                 <TableCell colSpan={3} align='right' sx={{ fontWeight: 'bold' }}>
                                     Total in {reportData.total.currency}:
                                 </TableCell>

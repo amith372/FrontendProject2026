@@ -98,11 +98,13 @@ function RateSettings() {
 
     return (
         <Paper elevation={3} sx={{ p: { xs: 2, md: 4 }, borderRadius: 3 }}>
+		{/* API config part*/}
             <Typography variant='h6' gutterBottom color='textSecondary' sx={{ mb: 2 }}>
                 ⚙️ API Configuration
             </Typography>
             <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
                 <TextField
+					// insert text for url
                     fullWidth
                     size='small'
                     label='Exchange Rates JSON URL'
@@ -113,6 +115,7 @@ function RateSettings() {
                     sx={{ flex: 1, minWidth: '200px' }}
                 />
                 <Button
+					{/* button for saving*/}
                     variant='contained'
                     color='secondary'
                     onClick={handleSaveUrl}
@@ -124,6 +127,7 @@ function RateSettings() {
 
             {status && (
                 <Typography
+				{/* handling error /success*/}
                     variant='caption'
                     color={isError ? 'error.main' : 'success.main'}
                     sx={{ mt: 1, display: 'block', fontWeight: 'bold' }}

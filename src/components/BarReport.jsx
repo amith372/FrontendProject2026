@@ -10,6 +10,7 @@ export default function BarReport({ data }) {
             <ResponsiveContainer width='99%' height='100%' minWidth={1}>
                 <BarChart
                     data={data}
+					// position
                     margin={{ top: 30, right: 30, left: 0, bottom: 45 }}
                 >
                     <CartesianGrid strokeDasharray='3 3' vertical={false} />

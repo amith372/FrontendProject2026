@@ -79,6 +79,7 @@ export default function GetRates({ onRatesLoaded }) {
 
                 if (onRatesLoaded) onRatesLoaded();
             } catch (err) {
+				// handeling error
                 console.error('Failed to fetch exchange rates:', err);
                 setError('Failed to load rates. Using defaults.');
                 if (onRatesLoaded) onRatesLoaded();
