@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import {useState, useMemo, useCallback} from 'react';
 import {
     Box,
     Button,
@@ -18,7 +18,7 @@ import {
 import { db } from '../db';
 import PieReport from './PieReport.jsx';
 import BarReport from './BarReport.jsx';
-import GetRate from "./GetRates.jsx";
+import GetRates from './GetRates.jsx';
 import './GetReport.css';
 
 /**
@@ -36,6 +36,7 @@ export default function GetReport() {
 
     // state to track if rates are ready
     const [ratesReady, setRatesReady] = useState(false);
+
 
     // async helper to fetch and format data
     const fetchReportData = () => {
@@ -68,6 +69,10 @@ export default function GetReport() {
         setYearlyData(fetchedYearly);
     };
 
+    const handleRatesLoaded = useCallback(() => {
+        setRatesReady(true);
+    }, []);
+
     // Insert data into pie chart
     const pieData = useMemo(() => {
         if (!reportData) return [];
@@ -75,7 +80,7 @@ export default function GetReport() {
         const catMap = {};
         // db.rates incase rates is empty
         const rates = reportData.rates || db.rates;
-        const targetCurrency = currency;
+        const targetCurrency = reportData.total.currency;
 
         // Adjusting prices based on chosen currency
         reportData.costs.forEach(item => {
@@ -99,8 +104,8 @@ export default function GetReport() {
 
     return (
         <Box>
-            {/* Render GetRate to fetch data */}
-            <GetRate onRatesLoaded={() => setRatesReady(true)} />
+            {/* Render GetRates to fetch data */}
+            <GetRates onRatesLoaded={handleRatesLoaded} />
 
             <Box className='report-controls'>
                 <FormControl size='small' className='control-field'>
